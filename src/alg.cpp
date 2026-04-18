@@ -60,7 +60,6 @@ std::string infx2pstfx(const std::string& inf) {
 int eval(const std::string& pref) {
   TStack<int, 100> st;
 
-  // просто используем pref как postфикс
   const std::string& post = pref;
 
   for (int i = 0; i < (int)post.size(); i++) {
