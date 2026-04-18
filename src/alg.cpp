@@ -12,10 +12,9 @@ int prior(char op) {
 
 std::string infx2pstfx(const std::string& inf) {
   TStack<char, 100> st;
-  std::string out = "";
+  std::string out;
 
   for (int i = 0; i < (int)inf.size(); i++) {
-
     if (isdigit(inf[i])) {
       while (i < (int)inf.size() && isdigit(inf[i])) {
         out += inf[i];
@@ -23,22 +22,16 @@ std::string infx2pstfx(const std::string& inf) {
       }
       out += ' ';
       i--;
-    }
-
-    else if (inf[i] == '(') {
+    } else if (inf[i] == '(') {
       st.push(inf[i]);
-    }
-
-    else if (inf[i] == ')') {
+    } else if (inf[i] == ')') {
       while (!st.isEmpty() && st.top() != '(') {
         out += st.top();
         out += ' ';
         st.pop();
       }
       st.pop();
-    }
-
-    else {
+    } else {
       while (!st.isEmpty() && prior(st.top()) >= prior(inf[i])) {
         out += st.top();
         out += ' ';
@@ -54,16 +47,18 @@ std::string infx2pstfx(const std::string& inf) {
     st.pop();
   }
 
+  if (!out.empty() && out.back() == ' ') {
+    out.pop_back();
+  }
+
   return out;
 }
 
 int eval(const std::string& pref) {
   TStack<int, 100> st;
-
   const std::string& s = pref;
 
   for (int i = 0; i < (int)s.size(); i++) {
-
     if (isdigit(s[i])) {
       int num = 0;
 
@@ -74,13 +69,13 @@ int eval(const std::string& pref) {
 
       st.push(num);
       i--;
-    }
+    } else if (s[i] == '+' || s[i] == '-' ||
+               s[i] == '*' || s[i] == '/') {
+      int b = st.top();
+      st.pop();
 
-    else if (s[i] == '+' || s[i] == '-' ||
-             s[i] == '*' || s[i] == '/') {
-
-      int b = st.top(); st.pop();
-      int a = st.top(); st.pop();
+      int a = st.top();
+      st.pop();
 
       int res = 0;
 
