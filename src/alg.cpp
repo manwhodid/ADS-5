@@ -1,11 +1,12 @@
 // Copyright 2025 NNTU-CS
 #include "alg.h"
-#include "tstack.h"
 
 #include <cctype>
 
 #include <map>
 #include <string>
+
+#include "tstack.h"
 
 int prior(char op) {
   if (op == '+' || op == '-') return 1;
