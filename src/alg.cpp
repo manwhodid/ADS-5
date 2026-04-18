@@ -12,16 +12,16 @@ int prior(char op) {
 
 std::string infx2pstfx(const std::string& inf) {
   TStack<char, 100> st;
-  std::string res = "";
+  std::string out = "";
 
   for (int i = 0; i < (int)inf.size(); i++) {
 
     if (isdigit(inf[i])) {
       while (i < (int)inf.size() && isdigit(inf[i])) {
-        res += inf[i];
+        out += inf[i];
         i++;
       }
-      res += ' ';
+      out += ' ';
       i--;
     }
 
@@ -31,8 +31,8 @@ std::string infx2pstfx(const std::string& inf) {
 
     else if (inf[i] == ')') {
       while (!st.isEmpty() && st.top() != '(') {
-        res += st.top();
-        res += ' ';
+        out += st.top();
+        out += ' ';
         st.pop();
       }
       st.pop();
@@ -40,8 +40,8 @@ std::string infx2pstfx(const std::string& inf) {
 
     else {
       while (!st.isEmpty() && prior(st.top()) >= prior(inf[i])) {
-        res += st.top();
-        res += ' ';
+        out += st.top();
+        out += ' ';
         st.pop();
       }
       st.push(inf[i]);
@@ -49,26 +49,26 @@ std::string infx2pstfx(const std::string& inf) {
   }
 
   while (!st.isEmpty()) {
-    res += st.top();
-    res += ' ';
+    out += st.top();
+    out += ' ';
     st.pop();
   }
 
-  return res;
+  return out;
 }
 
 int eval(const std::string& pref) {
   TStack<int, 100> st;
 
-  const std::string& post = pref;
+  const std::string& s = pref;
 
-  for (int i = 0; i < (int)post.size(); i++) {
+  for (int i = 0; i < (int)s.size(); i++) {
 
-    if (isdigit(post[i])) {
+    if (isdigit(s[i])) {
       int num = 0;
 
-      while (i < (int)post.size() && isdigit(post[i])) {
-        num = num * 10 + (post[i] - '0');
+      while (i < (int)s.size() && isdigit(s[i])) {
+        num = num * 10 + (s[i] - '0');
         i++;
       }
 
@@ -76,20 +76,20 @@ int eval(const std::string& pref) {
       i--;
     }
 
-    else if (post[i] == '+' || post[i] == '-' ||
-             post[i] == '*' || post[i] == '/') {
+    else if (s[i] == '+' || s[i] == '-' ||
+             s[i] == '*' || s[i] == '/') {
 
       int b = st.top(); st.pop();
       int a = st.top(); st.pop();
 
-      int r = 0;
+      int res = 0;
 
-      if (post[i] == '+') r = a + b;
-      else if (post[i] == '-') r = a - b;
-      else if (post[i] == '*') r = a * b;
-      else if (post[i] == '/') r = a / b;
+      if (s[i] == '+') res = a + b;
+      else if (s[i] == '-') res = a - b;
+      else if (s[i] == '*') res = a * b;
+      else if (s[i] == '/') res = a / b;
 
-      st.push(r);
+      st.push(res);
     }
   }
 
