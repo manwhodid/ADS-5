@@ -5,6 +5,6 @@
 #include <string>
 
 std::string infx2pstfx(const std::string& inf);
-int eval(const std::string& post);
+int eval(const std::string& pref);
 
 #endif  // INCLUDE_ALG_H_
