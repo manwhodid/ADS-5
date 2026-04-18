@@ -1,8 +1,10 @@
 // Copyright 2025 NNTU-CS
-#include <string>
-#include <map>
+#include "alg.h"
 #include "tstack.h"
+
 #include <cctype>
+#include <map>
+#include <string>
 
 int prior(char op) {
   if (op == '+' || op == '-') return 1;
@@ -14,9 +16,9 @@ std::string infx2pstfx(const std::string& inf) {
   TStack<char, 100> st;
   std::string out;
 
-  for (int i = 0; i < (int)inf.size(); i++) {
+  for (int i = 0; i < static_cast<int>(inf.size()); i++) {
     if (isdigit(inf[i])) {
-      while (i < (int)inf.size() && isdigit(inf[i])) {
+      while (i < static_cast<int>(inf.size()) && isdigit(inf[i])) {
         out += inf[i];
         i++;
       }
@@ -58,11 +60,11 @@ int eval(const std::string& pref) {
   TStack<int, 100> st;
   const std::string& s = pref;
 
-  for (int i = 0; i < (int)s.size(); i++) {
+  for (int i = 0; i < static_cast<int>(s.size()); i++) {
     if (isdigit(s[i])) {
       int num = 0;
 
-      while (i < (int)s.size() && isdigit(s[i])) {
+      while (i < static_cast<int>(s.size()) && isdigit(s[i])) {
         num = num * 10 + (s[i] - '0');
         i++;
       }
